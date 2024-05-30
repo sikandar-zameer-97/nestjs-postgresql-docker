@@ -18,6 +18,7 @@ https://localhost/login?next=/
 ```
 credentials:
 username: user-name@domain-name.com
+
 password: strong-password
 
 After successfull login -> Servers -> POC PostgreSQL Server -> password = password -> db
@@ -78,4 +79,4 @@ $ npm run start:prod
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[MIT licensed](LICENSE).
