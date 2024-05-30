@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: backend_api_container
+    depends_on:
+      - postgres
+    env_file: .env
+    ports:
+      - "9004:3002"
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "9000:5432"
+    env_file: .env
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+
+  adminer:
+    image: adminer
+    container_name: adminer_container
+    restart: always
+    ports:
+      - 9002:8080
+    depends_on:
+      - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    env_file: .env
+    ports:
+      - "9003:80"
+      - "443:443"
+    depends_on:
+      - postgres
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json:ro
+      - ./server.cert:/certs/server.cert:ro
+      - ./server.key:/certs/server.key:ro
+    command: ["-e", "-D", "/certs"] 
+volumes:
+  db-data:
+
